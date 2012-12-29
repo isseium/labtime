@@ -1,15 +1,28 @@
 class User < ActiveRecord::Base
-  attr_accessible :provider, :uid, :name, :email
+  attr_accessible :access_secret, :access_token, :name, :provider, :uid
+  has_many :works
 
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.provider = auth['provider']
-      user.uid = auth['uid']
-      if auth['info']
-         user.name = auth['info']['name'] || ""
-         user.email = auth['info']['email'] || ""
-      end
+  #---------------------------#
+  # self.create_with_omniauth #
+  #---------------------------#
+  def self.create_with_omniauth( auth )
+    user = User.new
+    user.provider = auth["provider"]
+    user.uid = auth["uid"]
+
+    unless auth["info"].blank?
+      user.name = auth["info"]["name"]
+      user.screen_name = auth["info"]["nickname"]
+      user.image = auth["info"]["image"]
     end
-  end
 
+    unless auth["credentials"].blank?
+      user.token = auth['credentials']['token']
+      user.secret = auth['credentials']['secret']
+    end
+
+    user.save
+
+    return user
+  end
 end

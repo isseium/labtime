@@ -1,30 +1,29 @@
+# coding: utf-8
 class SessionsController < ApplicationController
 
-  def new
-    redirect_to '/auth/twitter'
-  end
-
-
-  def create
+  #----------#
+  # callback #
+  #----------#
+  def callback
     auth = request.env["omniauth.auth"]
-    user = User.where(:provider => auth['provider'], 
-                      :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
+    user = User.where( provider: auth["provider"], uid: auth["uid"] ).first || User.create_with_omniauth( auth )
     session[:user_id] = user.id
-    if user.email.blank?
-      redirect_to edit_user_path(user), :alert => "Please enter your email address."
-    else
-      redirect_to root_url, :notice => 'Signed in!'
-    end
-
+    redirect_to :root, notice: "login"
   end
 
+  #---------#
+  # destroy #
+  #---------#
   def destroy
-    reset_session
-    redirect_to root_url, :notice => 'Signed out!'
+    session[:user_id] = nil
+    redirect_to :root, notice: "ログアウトしました。"
   end
 
+  #---------#
+  # failure #
+  #---------#
   def failure
-    redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}"
+    render text: "<span style='color: red;'>Auth Failure</span>"
   end
 
 end

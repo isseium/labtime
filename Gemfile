@@ -48,3 +48,4 @@ gem "therubyracer", ">= 0.11.0", :group => :assets, :platform => :ruby, :require
 gem "omniauth", ">= 1.1.1"
 gem "omniauth-twitter"
 gem "simple_form", ">= 2.0.4"
+gem "twitter"

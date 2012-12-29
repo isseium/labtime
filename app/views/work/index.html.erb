@@ -1,0 +1,36 @@
+<h1><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h1>
+
+<% unless @me %>
+	<%= form_tag(in_path) do %>
+		<%= hidden_field_tag :user_id, current_user.id %>
+	  <%= submit_tag 'らぼいん', :class=>'btn btn-primary btn-large' %>
+	<% end %>
+<% end %>
+
+<% if @me %>
+	<%= form_tag(out_path) do %>
+		<%= hidden_field_tag :user_id, current_user.id %>
+	  <%= submit_tag 'らぼあうと', :class=>'btn btn-danger btn-large' %>
+	<% end %>
+<% end %>
+<hr>
+<h2>らぼいんしている学生<%= "はいません。。。" unless @gakuchiku %></h2>
+<% if @gakuchiku %>
+	<ul class="unstyled">
+		<% @gakuchiku.each do |u| %>
+			<li class="span1"><%= link_to(image_tag(u.user.image, size: '64x64',:class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}") %><div style="font-size:16px;" id="<%= u.id %>"</div></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<% @gakuchiku.each do |u| %>
+	<script type="text/javascript">
+		setInterval(function() {
+			var now = Date.now();
+			var in_time = Date.parse("<%= (u.created_at).strftime('%Y/%m/%d %H:%M:%S') %>");
+			var sec = now - in_time;
+	    document.getElementById("<%= u.id %>").innerHTML = Math.round(sec/3600000 % 60) + ':' + Math.round(sec/60000)%60 + ':' + Math.round(sec/1000)%60;
+	    sec += 1000;
+	  }, 1000);
+	</script>
+<% end %>

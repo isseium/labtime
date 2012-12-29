@@ -1,33 +1,67 @@
+# coding: utf-8
 class ApplicationController < ActionController::Base
+
   protect_from_forgery
-  helper_method :current_user
-  helper_method :user_signed_in?
-  helper_method :correct_user?
+
+  # httpsリダイレクト
+  before_filter :ssl_redirect unless Rails.env.development?
+
+  # 未ログインリダイレクト
+  before_filter :authorize
+
+  # セッション有効期限延長
+  before_filter :reset_session_expires
 
   private
-    def current_user
-      begin
-        @current_user ||= User.find(session[:user_id]) if session[:user_id]
-      rescue Exception => e
-        nil
+
+  #--------------#
+  # ssl_redirect #
+  #--------------#
+  # httpsへリダイレクト(Production環境のみ)
+  def ssl_redirect
+    if Rails.env.production? and request.env["HTTP_X_FORWARDED_PROTO"].to_s != "https"
+      request.env["HTTP_X_FORWARDED_PROTO"] = "https"
+
+      redirect_to request.url and return
+    end
+  end
+
+  #-----------#
+  # authorize #
+  #-----------#
+  # ログイン認証
+  def authorize
+    # セッション、トップコントローラ以外で
+    if params[:controller] != "sessions" and params[:controller] != "top"
+      # 未ログインであればルートヘリダイレクト
+      if session[:user_id].blank?
+        redirect_to :root and return
       end
     end
 
-    def user_signed_in?
-      return true if current_user
-    end
-
-    def correct_user?
-      @user = User.find(params[:id])
-      unless current_user == @user
-        redirect_to root_url, :alert => "Access denied."
+    # トップコントローラで
+    if params[:controller] == "top"
+      # ログイン済みであればroomへリダイレクト
+      unless session[:user_id].blank?
+        redirect_to controller: "work" and return
       end
     end
+  end
 
-    def authenticate_user!
-      if !current_user
-        redirect_to root_url, :alert => 'You need to sign in for access to this page.'
-      end
-    end
+  #-----------------------#
+  # reset_session_expires #
+  #-----------------------#
+  # セッション期限延長
+  def reset_session_expires
+    request.session_options[:expire_after] = 2.weeks
+  end
 
+  #--------------#
+  # current_user #
+  #--------------#
+  def current_user
+    @current_user ||= User.where( id: session[:user_id] ).first
+  end
+
+  helper_method :current_user
 end
