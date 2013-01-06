@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229123604) do
+ActiveRecord::Schema.define(:version => 20130106075839) do
+
+  create_table "social_feature_likes", :force => true do |t|
+    t.integer  "work_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "social_feature_likes", ["work_id"], :name => "index_social_feature_likes_on_work_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

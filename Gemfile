@@ -49,3 +49,7 @@ gem "omniauth", ">= 1.1.1"
 gem "omniauth-twitter"
 gem "simple_form", ">= 2.0.4"
 gem "twitter"
+gem "chili"
+group :chili do
+  gem 'social_feature', path: 'lib/chili/social_feature'
+end

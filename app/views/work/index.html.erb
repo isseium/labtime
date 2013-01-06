@@ -1,26 +1,36 @@
-<h1><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h1>
+<h2><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h2>
 
 <% unless @me %>
-	<%= form_tag(in_path) do %>
-		<%= hidden_field_tag :user_id, current_user.id %>
-	  <%= submit_tag 'らぼいん', :class=>'btn btn-primary btn-large' %>
-	<% end %>
+	<%= render 'in' %>
 <% end %>
 
 <% if @me %>
-	<%= form_tag(out_path) do %>
-		<%= hidden_field_tag :user_id, current_user.id %>
-	  <%= submit_tag 'らぼあうと', :class=>'btn btn-danger btn-large' %>
-	<% end %>
+	<%= render 'out' %>
 <% end %>
 <hr>
-<h2>らぼいんしている学生<%= "はいません..." if @gakuchiku.empty? %></h2>
+<h3>らぼいんしている学生(<%= @gakuchiku.size %>人)<%= "はいません..." if @gakuchiku.empty? %></h3>
 <% if @gakuchiku %>
-	<ul class="unstyled">
+	<table class="table table-striped">
 		<% @gakuchiku.each do |u| %>
-			<li class="span2"><%= link_to(image_tag(u.user.image, size: '128x128',:class => "img-polaroid"), "http://twitter.com/#!/#{u.user.screen_name}") %><div align="center" style="font-size:30px;" id="<%= u.id %>"</div></li>
+		<tr>
+			<th>Name</th>
+			<th>Time</th>
+			<th>Actions</th>
+			<th></th>
+		<tr>
+			<td>
+				<%= link_to(image_tag(u.user.image, size: '64x64',:class => "img-polaroid"), "http://twitter.com/#!/#{u.user.screen_name}") %><br>
+				<%= u.user.name %>
+			</td>
+			<td>
+				<div style="font-size:32px;" id="<%= u.id %>"</div>
+			</td>
+			<td>
+				<%= link_to simple_format("Fight <i class='icon-thumbs-up'></i>"), social_feature.likes_path(like: { work_id: u.id }), method: 'post', class: "btn"%>
+			</td>
+		</tr>
 		<% end %>
-	</ul>
+	</table>
 <% end %>
 
 <% @gakuchiku.each do |u| %>
