@@ -14,11 +14,11 @@
 	<% end %>
 <% end %>
 <hr>
-<h2>らぼいんしている学生<%= "はいません。。。" unless @gakuchiku %></h2>
+<h2>らぼいんしている学生<%= "はいません..." if @gakuchiku.empty? %></h2>
 <% if @gakuchiku %>
 	<ul class="unstyled">
 		<% @gakuchiku.each do |u| %>
-			<li class="span1"><%= link_to(image_tag(u.user.image, size: '64x64',:class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}") %><div style="font-size:16px;" id="<%= u.id %>"</div></li>
+			<li class="span2"><%= link_to(image_tag(u.user.image, size: '128x128',:class => "img-polaroid"), "http://twitter.com/#!/#{u.user.screen_name}") %><div align="center" style="font-size:30px;" id="<%= u.id %>"</div></li>
 		<% end %>
 	</ul>
 <% end %>
@@ -29,8 +29,8 @@
 			var now = Date.now();
 			var in_time = Date.parse("<%= (u.created_at).strftime('%Y/%m/%d %H:%M:%S') %>");
 			var sec = now - in_time;
-	    document.getElementById("<%= u.id %>").innerHTML = Math.round(sec/3600000 % 60) + ':' + Math.round(sec/60000)%60 + ':' + Math.round(sec/1000)%60;
-	    sec += 1000;
-	  }, 1000);
+	    document.getElementById("<%= u.id %>").innerHTML = Math.floor(sec/3600000%60) + ':' + Math.floor(sec/60000%60) + ':' + Math.floor(sec/1000%60) + ':' + Math.floor(sec/100%6);
+	    sec += 100;
+	  }, 100);
 	</script>
 <% end %>

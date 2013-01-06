@@ -36,7 +36,7 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-#gem "thin", ">= 1.5.0"
+gem "thin", ">= 1.5.0"
 gem "mysql2", ">= 0.3.11"
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
