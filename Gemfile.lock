@@ -74,6 +74,7 @@ GEM
     mime-types (1.19)
     multi_json (1.5.0)
     multipart-post (1.1.5)
+    mysql2 (0.3.11)
     oauth (0.4.7)
     omniauth (1.1.1)
       hashie (~> 1.2)
@@ -139,6 +140,7 @@ GEM
     therubyracer (0.11.1)
       libv8 (~> 3.11.8.7)
       ref
+    therubyracer-heroku (0.8.1.pre3)
     thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -171,6 +173,7 @@ DEPENDENCIES
   jquery-rails
   less-rails (>= 2.2.6)
   libv8 (>= 3.11.8)
+  mysql2 (>= 0.3.11)
   omniauth (>= 1.1.1)
   omniauth-twitter
   pg
@@ -179,6 +182,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   simple_form (>= 2.0.4)
   therubyracer (>= 0.11.1)
+  therubyracer-heroku
   thin (>= 1.5.0)
   twitter
   twitter-bootstrap-rails (>= 2.1.8)

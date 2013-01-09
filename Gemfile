@@ -37,12 +37,13 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "thin", ">= 1.5.0"
-# group :development, :test do
-# 	gem "mysql2", ">= 0.3.11"
-# end
-# group :production do
-gem "pg"
-# end
+group :development, :test do
+	gem "mysql2", ">= 0.3.11"
+end
+group :production do
+  gem "pg"
+  gem "therubyracer-heroku"
+end
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
 gem "email_spec", ">= 1.4.0", :group => :test
