@@ -2,7 +2,7 @@
 class WorkController < ApplicationController
 	def index
     @gakuchiku = current_login_users
-    unless Work.nil?
+    if Work.nil?
       @me = Work.where(:user_id => current_user.id, :work_time => nil).first if current_user
     end
     respond_to do |format|
