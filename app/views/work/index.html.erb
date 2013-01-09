@@ -9,19 +9,19 @@ ul li p {
 
 <%= Time.now.strftime('%Y年%m月%d日') %>
 <h4><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h4>
-<%# unless @me %>
+<% unless @me %>
 	<%= form_tag(in_path) do %>
 		<%= hidden_field_tag :user_id, current_user.id %>
 	  <%= submit_tag 'らぼいん', :class=>'btn btn-primary btn-large' %>
 	<% end %>
-<%# end %>
+<% end %>
 
-<%# if @me %>
+<% if @me %>
 	<%= form_tag(out_path) do %>
 		<%= hidden_field_tag :user_id, current_user.id %>
 	  <%= submit_tag 'らぼあうと', :class=>'btn btn-danger btn-large' %>
 	<% end %>
-<%# end %>
+<% end %>
 <hr>
 <h4>らぼいんしている学生（<%= @gakuchiku.size %>人）<%= "はいません..." if @gakuchiku.empty? %></h4>
 <% if @gakuchiku %>
