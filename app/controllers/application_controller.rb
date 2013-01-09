@@ -18,13 +18,13 @@ class ApplicationController < ActionController::Base
   # ssl_redirect #
   #--------------#
   # httpsへリダイレクト(Production環境のみ)
-  def ssl_redirect
-    if Rails.env.production? and request.env["HTTP_X_FORWARDED_PROTO"].to_s != "https"
-      request.env["HTTP_X_FORWARDED_PROTO"] = "https"
+  # def ssl_redirect
+  #   if Rails.env.production? and request.env["HTTP_X_FORWARDED_PROTO"].to_s != "https"
+  #     request.env["HTTP_X_FORWARDED_PROTO"] = "https"
 
-      redirect_to request.url and return
-    end
-  end
+  #     redirect_to request.url and return
+  #   end
+  # end
 
   #-----------#
   # authorize #
