@@ -36,19 +36,22 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem "thin", ">= 1.5.0"
+
 group :development, :test do
 	gem "mysql2", ">= 0.3.11"
 end
+
 group :production do
   gem "pg"
 end
+
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
 gem "email_spec", ">= 1.4.0", :group => :test
 gem "less-rails", ">= 2.2.6", :group => :assets
 gem "twitter-bootstrap-rails", ">= 2.1.8", :group => :assets
 gem "libv8", ">= 3.11.8"
-gem "therubyracer", ">= 0.11.1", :group => :assets, :platform => :ruby, :require => "v8"
+#gem "therubyracer", ">= 0.11.1", :group => :assets, :platform => :ruby, :require => "v8"
 gem "omniauth", ">= 1.1.1"
 gem "omniauth-twitter"
 gem "simple_form", ">= 2.0.4"
