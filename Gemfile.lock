@@ -178,7 +178,7 @@ DEPENDENCIES
   rspec-rails (>= 2.11.4)
   sass-rails (~> 3.2.3)
   simple_form (>= 2.0.4)
-  therubyracer (>= 0.11.0)
+  therubyracer (>= 0.11.1)
   thin (>= 1.5.0)
   twitter
   twitter-bootstrap-rails (>= 2.1.8)
