@@ -74,7 +74,6 @@ GEM
     mime-types (1.19)
     multi_json (1.5.0)
     multipart-post (1.1.5)
-    mysql2 (0.3.11)
     oauth (0.4.7)
     omniauth (1.1.1)
       hashie (~> 1.2)
@@ -172,7 +171,6 @@ DEPENDENCIES
   jquery-rails
   less-rails (>= 2.2.6)
   libv8 (>= 3.11.8)
-  mysql2 (>= 0.3.11)
   omniauth (>= 1.1.1)
   omniauth-twitter
   pg
