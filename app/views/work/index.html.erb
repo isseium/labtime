@@ -1,46 +1,70 @@
-<h2><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h2>
+<style type="text/css" media="screen">
+ul li p {
+	display: inline;
+}
+.pink {
+	background-color: #F2DEDE;
+}
+</style>
 
+<%= Time.now.strftime('%Y年%m月%d日') %>
+<h4><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h4>
 <% unless @me %>
-	<%= render 'in' %>
+	<%= form_tag(in_path) do %>
+		<%= hidden_field_tag :user_id, current_user.id %>
+	  <%= submit_tag 'らぼいん', :class=>'btn btn-primary btn-large' %>
+	<% end %>
 <% end %>
 
 <% if @me %>
-	<%= render 'out' %>
+	<%= form_tag(out_path) do %>
+		<%= hidden_field_tag :user_id, current_user.id %>
+	  <%= submit_tag 'らぼあうと', :class=>'btn btn-danger btn-large' %>
+	<% end %>
 <% end %>
 <hr>
-<h3>らぼいんしている学生(<%= @gakuchiku.size %>人)<%= "はいません..." if @gakuchiku.empty? %></h3>
+<h4>らぼいんしている学生（<%= @gakuchiku.size %>人）<%= "はいません..." if @gakuchiku.empty? %></h4>
 <% if @gakuchiku %>
-	<table class="table table-striped">
+	<ul class="thumbnails">
 		<% @gakuchiku.each do |u| %>
-		<tr>
-			<th>Name</th>
-			<th>Time</th>
-			<th>Actions</th>
-			<th></th>
-		<tr>
-			<td>
-				<%= link_to(image_tag(u.user.image, size: '64x64',:class => "img-polaroid"), "http://twitter.com/#!/#{u.user.screen_name}") %><br>
-				<%= u.user.name %>
-			</td>
-			<td>
-				<div style="font-size:32px;" id="<%= u.id %>"</div>
-			</td>
-			<td>
-				<%= link_to simple_format("Fight <i class='icon-thumbs-up'></i>"), social_feature.likes_path(like: { work_id: u.id }), method: 'post', class: "btn"%>
-			</td>
-		</tr>
+			<li class="span4 thumbnail <%= "pink" if u == @me %>">
+				<%= link_to(image_tag(u.user.image, :class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}",target: "_blank") %>
+				<%= u.user.screen_name %>
+				<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), '#' %>
+				<span class="badge">3</span>
+				<h3><div id="<%= u.id %>" style="display:inline;"></div></h3>
+				<div class="progress progress-striped active">
+  				<div class="bar" id="<%= u.id.to_s + 'bar' %>">MAX 8h</div>
+				</div>
+				<div id="<%= u.id.to_s + 'alert' %>"</div>
+			</li>
 		<% end %>
-	</table>
+	</ul>
 <% end %>
 
 <% @gakuchiku.each do |u| %>
 	<script type="text/javascript">
+	function timer(sec){
 		setInterval(function() {
-			var now = Date.now();
-			var in_time = Date.parse("<%= (u.created_at).strftime('%Y/%m/%d %H:%M:%S') %>");
-			var sec = now - in_time;
 	    document.getElementById("<%= u.id %>").innerHTML = Math.floor(sec/3600000%60) + ':' + Math.floor(sec/60000%60) + ':' + Math.floor(sec/1000%60) + ':' + Math.floor(sec/100%6);
 	    sec += 100;
 	  }, 100);
+	}
+
+	var now = Date.now();
+	var in_time = Date.parse("<%= (u.created_at).strftime('%Y/%m/%d %H:%M:%S') %>");
+	var sec = now - in_time;
+	timer(sec);
+	if(sec > 36000000){ //10h over
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>休みましょう。。。</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "100%";
+	}
+	else{
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-success'>頑張りましょう！</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "40%";
+	}
 	</script>
 <% end %>
+
+
+
