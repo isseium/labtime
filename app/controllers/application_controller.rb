@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   # httpsリダイレクト
-  before_filter :ssl_redirect unless Rails.env.development?
+  #before_filter :ssl_redirect unless Rails.env.development?
 
   # 未ログインリダイレクト
   before_filter :authorize
