@@ -2,9 +2,7 @@
 class WorkController < ApplicationController
 	def index
     @gakuchiku = current_login_users
-    #@me = Work.where(:user_id => current_user.id).first
-    #@me = Work.find(:first, :conditions => {:user_id => current_user.id})
-
+    @me = Work.where(:user_id => current_user.id, :work_time => nil).first
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @gakuchiku }
