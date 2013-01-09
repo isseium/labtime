@@ -42,7 +42,7 @@ group :development, :test do
 end
 group :production do
   gem "pg"
-  gem 'therubyracer-heroku'
+  gem 'therubyracer-heroku', '0.8.1.pre3'
 end
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test

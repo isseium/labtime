@@ -177,7 +177,7 @@ DEPENDENCIES
   rspec-rails (>= 2.11.4)
   sass-rails (~> 3.2.3)
   simple_form (>= 2.0.4)
-  therubyracer-heroku
+  therubyracer-heroku (= 0.8.1.pre3)
   thin (>= 1.5.0)
   twitter
   twitter-bootstrap-rails (>= 2.1.8)
