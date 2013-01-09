@@ -2,7 +2,7 @@
 class WorkController < ApplicationController
 	def index
     @gakuchiku = current_login_users
-    @me = Work.where(:user_id => current_user.id).first
+    @me |= Work.where(:user_id => current_user.id).first
 
     respond_to do |format|
       format.html # index.html.erb
