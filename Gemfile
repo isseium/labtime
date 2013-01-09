@@ -15,9 +15,11 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
+  gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
 end
+
+gem 'kickstrap_rails', git: 'git://github.com/tonic20/kickstrap_rails.git'
 
 gem 'jquery-rails'
 
@@ -42,8 +44,7 @@ group :development, :test do
 end
 group :production do
   gem "pg"
-  gem 'therubyracer', :platforms => :ruby
-  gem 'kickstrap_rails', git: 'git://github.com/tonic20/kickstrap_rails.git'
+
 end
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
