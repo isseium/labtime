@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -41,14 +41,16 @@ group :development, :test do
 	gem "mysql2", ">= 0.3.11"
 end
 group :production do
-  gem "pg"
+  #gem "pg"
+  gem 'mysql2'
 end
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
 gem "email_spec", ">= 1.4.0", :group => :test
 gem "less-rails", ">= 2.2.6", :group => :assets
 gem "twitter-bootstrap-rails", ">= 2.1.8", :group => :assets
-gem "libv8", ">= 3.11.8"
+gem "libv8" #, ">= 3.11.8"
+gem "therubyracer", :group => :assets, :platform => :ruby, :require => "v8"
 # gem "therubyracer", ">= 0.11.1", :group => :assets, :platform => :ruby, :require => "v8"
 gem "omniauth", ">= 1.1.1"
 gem "omniauth-twitter"

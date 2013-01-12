@@ -55,13 +55,16 @@ ul li p {
 	var in_time = Date.parse("<%= (u.created_at).strftime('%Y/%m/%d %H:%M:%S') %>");
 	var sec = now - in_time;
 	timer(sec);
-	if(sec > 36000000){ //10h over
+	if(sec > 3600000 * 8){ //8h over
 		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>休みましょう。。。</span>";
 		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "100%";
 	}
+	else if(sec > 3600000){
+		alert("hoge");
+	}
 	else{
 		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-success'>頑張りましょう！</span>";
-		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "40%";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "10%";
 	}
 	</script>
 <% end %>
