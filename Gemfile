@@ -41,8 +41,7 @@ group :development, :test do
 	gem "mysql2", ">= 0.3.11"
 end
 group :production do
-  #gem "pg"
-  gem 'mysql2'
+  gem "pg"
 end
 gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
