@@ -2,7 +2,7 @@
 class WorkController < ApplicationController
 	def index
     @gakuchiku = current_login_users
-    @me = Work.find_by_user_id_and_work_time(current_user.id, nil)
+    @me = Work.find_by_user_id_and_work_time(current_user.id.to_s, nil)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @gakuchiku }
@@ -20,7 +20,7 @@ class WorkController < ApplicationController
   end
 
   def out
-    work = Work.find_by_user_id_and_work_time(current_user.id, nil)
+    work = Work.find_by_user_id_and_work_time(current_user.id.to_s, nil)
     tmp = Time.now
     days = (tmp - work.created_at).divmod(24*60*60)
     hours = days[1].divmod(60*60)
