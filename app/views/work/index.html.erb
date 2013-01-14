@@ -31,7 +31,7 @@ ul li p {
 				<%= link_to(image_tag(u.user.image, :class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}",target: "_blank") %>
 				<%= u.user.screen_name %>
 				<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), '#' %>
-				<span class="badge">3</span>
+				<!-- <span class="badge">3</span> -->
 				<h3><div id="<%= u.id %>" style="display:inline;"></div></h3>
 				<div class="progress progress-striped active">
   				<div class="bar" id="<%= u.id.to_s + 'bar' %>">MAX 8h</div>
@@ -59,12 +59,33 @@ ul li p {
 		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>休みましょう。。。</span>";
 		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "100%";
 	}
-	else if(sec > 3600000){
-		alert("hoge");
+	else if(sec > 3600000 * 7){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>そろそろ帰る準備しましょう！</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "84%";
+	}
+	else if(sec > 3600000 * 6){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>あと少し！</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "72%";
+	}
+	else if(sec > 3600000 * 5){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>眠たくなったら背伸びしましょう！</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "60%";
+	}
+	else if(sec > 3600000 * 4){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>もう半分過ぎましたよ？</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "48%";
+	}
+	else if(sec > 3600000 * 3){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>そろそろお昼？かも</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "36%";
+	}
+	else if(sec > 3600000 * 2){
+		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-important'>へい！</span>";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "24%";
 	}
 	else{
 		document.getElementById("<%= u.id.to_s + 'alert' %>").innerHTML = "<span class='label label-success'>頑張りましょう！</span>";
-		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "10%";
+		document.getElementById("<%= u.id.to_s + 'bar' %>").style.width = "12%";
 	}
 	</script>
 <% end %>
