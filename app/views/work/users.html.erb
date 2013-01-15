@@ -1,0 +1,18 @@
+<table class="table table-striped">
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>screen_name</th>
+		<th>icon</th>
+	</tr>
+	<% @users.each do |u| %>
+	<tr>
+		<td><%= u.id %></td>
+		<td><%= u.name %></td>
+		<td><%= u.screen_name %></td>
+		<td><%= image_tag u.image %></td>
+	</tr>
+	<% end %>
+</table>
+
+

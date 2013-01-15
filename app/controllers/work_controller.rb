@@ -1,5 +1,7 @@
 # coding: utf-8
 class WorkController < ApplicationController
+  before_filter :auth, :only => :users 
+
 	def index
     @gakuchiku = current_login_users
     @me = Work.find_by_user_id_and_work_time(current_user.id.to_s, nil)
@@ -31,6 +33,10 @@ class WorkController < ApplicationController
     end
   end
 
+  def users
+    @users = User.all
+  end
+
   private
   #　各クライアント生成
 
@@ -45,6 +51,12 @@ class WorkController < ApplicationController
 
   def current_login_users
     Work.where(:work_time => nil )
+  end
+
+  def auth
+    authenticate_or_request_with_http_basic do |user, pass|
+      user == 'whitech0c0' && pass == 'nekohei'
+    end
   end
 
   # def home_timeline_from_twitter
