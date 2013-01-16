@@ -1,6 +1,6 @@
 # coding: utf-8
 class WorkController < ApplicationController
-  before_filter :auth, :only => :users 
+  before_filter :auth, :only => :users
 
 	def index
     @gakuchiku = current_login_users
@@ -38,8 +38,6 @@ class WorkController < ApplicationController
   end
 
   private
-  #　各クライアント生成
-
   def twitter_client
     Twitter.configure do |config|
       config.consumer_key       = ENV['TWITTER_KEY']

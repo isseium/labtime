@@ -12,7 +12,7 @@ ul li p {
 <% unless @me %>
 	<%= form_tag(in_path) do %>
 		<%= hidden_field_tag :user_id, current_user.id %>
-	  <%= submit_tag 'らぼいん', :class=>'btn btn-primary btn-large' %>
+	  <%= submit_tag 'らぼいん', :confirm => '投稿してよろしいですか？', :class=>'btn btn-primary btn-large' %>
 	<% end %>
 <% end %>
 
