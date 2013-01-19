@@ -5,21 +5,24 @@ ul li p {
 .pink {
 	background-color: #F2DEDE;
 }
+#like{
+	display: inline;
+}
 </style>
 
 <%= Time.now.strftime('%Y年%m月%d日') %>
-<h4><%= image_tag current_user.image, class: "img-circle" %>さん、お疲れ様です。</h4>
+<h4><%= current_user.name %>の旦那、お疲れ様です。</h4>
 <% unless @me %>
 	<%= form_tag(in_path) do %>
 		<%= hidden_field_tag :user_id, current_user.id %>
-	  <%= submit_tag 'らぼいん', :confirm => '投稿してよろしいですか？', :class=>'btn btn-primary btn-large' %>
+	  <%= submit_tag 'らぼいん', :confirm => '投稿してよろしいですか？', :disable => "送信中", :class=>'btn btn-primary btn-large' %>
 	<% end %>
 <% end %>
 
 <% if @me %>
 	<%= form_tag(out_path) do %>
 		<%= hidden_field_tag :user_id, current_user.id %>
-	  <%= submit_tag 'らぼあうと', :class=>'btn btn-danger btn-large' %>
+	  <%= submit_tag 'らぼあうと', :disable => "送信中", :class=>'btn btn-danger btn-large' %>
 	<% end %>
 <% end %>
 <hr>
@@ -30,8 +33,10 @@ ul li p {
 			<li class="span4 thumbnail <%= "pink" if u == @me %>">
 				<%= link_to(image_tag(u.user.image, :class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}",target: "_blank") %>
 				<%= u.user.screen_name %>
-				<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), '#' %>
-				<!-- <span class="badge">3</span> -->
+				<div id="<%= 'like' + u.id.to_s %>">
+					<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), likes_path(user_id: current_user, work_id: u.id), :method => :post, :remote => true, "data-type" => "html" %>
+				</div>
+				<span class="badge" id="<%='like_area' + u.id.to_s %>"><%= u.likes.count %></span>
 				<h3><div id="<%= u.id %>" style="display:inline;"></div></h3>
 				<div class="progress progress-striped active">
   				<div class="bar" id="<%= u.id.to_s + 'bar' %>">MAX 8h</div>
@@ -43,6 +48,13 @@ ul li p {
 <% end %>
 
 <% @gakuchiku.each do |u| %>
+	<%= javascript_tag do %>
+	$('#like'+"<%= u.id.to_s %>").on('ajax:success', function (data, status, xhr) {
+	  <!-- $('#like_area').html("ファイト！を送りました！"); -->
+	  var tmp = $('#like_area'+"<%= u.id.to_s %>").text();
+	  $('#like_area'+"<%= u.id.to_s %>").html(parseInt(tmp) + 1); 
+	})
+	<% end %>
 	<script type="text/javascript">
 	function timer(sec){
 		setInterval(function() {

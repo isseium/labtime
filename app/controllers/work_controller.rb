@@ -5,8 +5,9 @@ class WorkController < ApplicationController
 	def index
     @gakuchiku = current_login_users
     @me = Work.find_by_user_id_and_work_time(current_user.id.to_s, nil)
+
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render layout: (request.headers["X-Requested-With"] != 'XMLHttpRequest') }
       format.json { render json: @gakuchiku }
     end
   end
@@ -17,7 +18,7 @@ class WorkController < ApplicationController
     if work.save
       day = Time.now
       twitter_client.update("らぼいん。#{day.strftime('%Y/%m/%d %H:%M:%S')}")
-      redirect_to :root, :notice => "らぼいんしました。"
+      redirect_to :back, :notice => "らぼいんしました。"
     end
   end
 
@@ -28,8 +29,8 @@ class WorkController < ApplicationController
     hours = days[1].divmod(60*60)
     mins = hours[1].divmod(60)
     if work.update_attribute(:work_time, tmp - work.created_at)
-      twitter_client.update("らぼあうと。 #{hours[0].to_i} 時間 #{mins[0].to_i} 分 #{mins[1].to_i} 秒ガンバりました。")
-      redirect_to :root, :notice => "らぼあうとしました。"
+      twitter_client.update("らぼあうと。 #{hours[0].to_i} 時間 #{mins[0].to_i} 分 #{mins[1].to_i} 秒ガンバりました。 http://bit.ly/UvD0WC")
+      redirect_to :back, :notice => "らぼあうとしました。"
     end
   end
 

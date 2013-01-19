@@ -1,4 +1,6 @@
 Labtime::Application.routes.draw do
+
+  resources :likes, :only => [:index, :create]
   match "/auth/:provider/callback" => "sessions#callback"
   match "/auth/failure" => "sessions#failure"
   match "/logout" => "sessions#destroy", :as => :logout

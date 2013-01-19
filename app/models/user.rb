@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :access_secret, :access_token, :name, :provider, :uid
   has_many :works
+  has_many :likes
 
   #---------------------------#
   # self.create_with_omniauth #
