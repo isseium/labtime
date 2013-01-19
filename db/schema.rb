@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118160551) do
+ActiveRecord::Schema.define(:version => 20130119083114) do
 
   create_table "likes", :force => true do |t|
-    t.string   "user_id"
-    t.string   "work_id"
+    t.integer  "user_id"
+    t.integer  "work_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
