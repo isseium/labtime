@@ -4,9 +4,10 @@ class LikesController < ApplicationController
     like = Like.new
     like.user_id = params[:user_id]
     like.work_id = params[:work_id]
-    if like.save
-     redirect_to :back, :notice => "ファイトを送りました。"
-    end
+    like.save
+    # if like.save
+    #  redirect_to :back, :notice => "ファイトを送りました。"
+    # end
   end
 
   def destroy
