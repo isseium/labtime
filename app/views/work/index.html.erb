@@ -30,9 +30,9 @@ ul li p {
 <% if @gakuchiku %>
 	<ul class="thumbnails">
 		<% @gakuchiku.each do |u| %>
-			<li class="span4 thumbnail <%= "pink" if u == @me %>">
+			<li class="span3 thumbnail <%= "pink" if u == @me %>">
 				<%= link_to(image_tag(u.user.image, :class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}",target: "_blank") %>
-				<%= u.user.screen_name %>
+				<%= u.user.name %>
 				<div id="<%= 'like' + u.id.to_s %>" class="like">
 					<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), likes_path(user_id: current_user, work_id: u.id), :method => :post, :remote => true, "data-type" => "html" %>
 				</div>
@@ -52,7 +52,7 @@ ul li p {
 	$('#like'+"<%= u.id.to_s %>").on('ajax:success', function (data, status, xhr) {
 	  <!-- $('#like_area').html("ファイト！を送りました！"); -->
 	  var tmp = $('#like_area'+"<%= u.id.to_s %>").text();
-	  $('#like_area'+"<%= u.id.to_s %>").html(parseInt(tmp) + 1); 
+	  $('#like_area'+"<%= u.id.to_s %>").html(parseInt(tmp) + 1);
 	})
 	<% end %>
 	<script type="text/javascript">
