@@ -1,3 +1,4 @@
+
 <style type="text/css" media="screen">
 ul li p {
 	display: inline;
@@ -33,10 +34,18 @@ ul li p {
 			<li class="span3 thumbnail <%= "pink" if u == @me %>">
 				<%= link_to(image_tag(u.user.image, :class => "img-rounded"), "http://twitter.com/#!/#{u.user.screen_name}",target: "_blank") %>
 				<%= u.user.name %><br>
-				<div id="<%= 'like' + u.id.to_s %>" class="like">
-					<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), likes_path(user_id: current_user, work_id: u.id), :method => :post, :remote => true, "data-type" => "html" %>
-				</div>
-				<span class="badge" id="<%='like_area' + u.id.to_s %>"><%= u.likes.count %></span>
+				<% unless @liked[u.id] %>
+					<div id="<%= 'like' + u.id.to_s %>" class="like">
+						<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), likes_path(user_id: current_user, work_id: u.id), :method => :post %>
+					</div>
+				<% end %>
+				<span class="badge badge-info" id="<%='like_area' + u.id.to_s %>"><%= "#{u.likes.count}ファイト！" %></span><br>
+				<% u.likes.each do |l| %>
+					<% l.user.name = 'あなた' if l.user.id == current_user.id %>
+					<%= link_to(l.user.name, "http://twitter.com/#!/#{l.user.screen_name}",target: "_blank") %><%='と' if(u.likes.count > 1 && l != u.likes.last) %>
+				<% end %>
+				<%='がファイト！と言っています。' if u.likes.count > 0 %>
+
 				<h3><div id="<%= u.id %>" style="display:inline;"></div></h3>
 				<div class="progress progress-striped active">
   				<div class="bar" id="<%= u.id.to_s + 'bar' %>">MAX 8h</div>
@@ -48,13 +57,6 @@ ul li p {
 <% end %>
 
 <% @gakuchiku.each do |u| %>
-	<%= javascript_tag do %>
-	$('#like'+"<%= u.id.to_s %>").on('ajax:success', function (data, status, xhr) {
-	  <!-- $('#like_area').html("ファイト！を送りました！"); -->
-	  var tmp = $('#like_area'+"<%= u.id.to_s %>").text();
-	  $('#like_area'+"<%= u.id.to_s %>").html(parseInt(tmp) + 1);
-	})
-	<% end %>
 	<script type="text/javascript">
 	function timer(sec){
 		setInterval(function() {

@@ -4,6 +4,12 @@ class WorkController < ApplicationController
 
 	def index
     @gakuchiku = current_login_users
+    @liked = Hash.new
+    @gakuchiku.each do |w|
+      w.likes.each do |l|
+       @liked[w.id] = true if l.user_id == current_user.id
+      end
+    end
     @me = Work.find_by_user_id_and_work_time(current_user.id.to_s, nil)
 
     respond_to do |format|
