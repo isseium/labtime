@@ -23,7 +23,7 @@ class WorkController < ApplicationController
     work.user_id = params[:user_id]
     if work.save
       day = Time.now
-      twitter_client.update("らぼいん。#{day.strftime('%Y/%m/%d %H:%M:%S')} http://bit.ly/UvD0WC")
+      twitter_client.update("らぼいん。#{day.strftime('%H:%M')} http://bit.ly/UvD0WC")
       redirect_to :back, :notice => "らぼいんしました。"
     end
   end
