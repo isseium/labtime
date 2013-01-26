@@ -11,6 +11,7 @@ ul li p {
 }
 </style>
 
+
 <%= Time.now.strftime('%Y年%m月%d日') %>
 <h4><%= current_user.name %>の旦那、お疲れ様です。</h4>
 <% unless @me %>
@@ -39,15 +40,19 @@ ul li p {
 						<%= link_to simple_format("<i class='icon-thumbs-up'></i>ファイト！"), likes_path(user_id: current_user, work_id: u.id), :method => :post %>
 					</div>
 				<% end %>
-				<span class="badge badge-info" id="<%='like_area' + u.id.to_s %>"><%= "#{u.likes.count}ファイト！" %></span><br>
-				<% u.likes.each do |l| %>
-					<% l.user.name = 'あなた' if l.user.id == current_user.id %>
-					<%= link_to(l.user.name, "http://twitter.com/#!/#{l.user.screen_name}",target: "_blank") %>
-					<%= 'さん' unless l.user.id == current_user.id %>
-					<%='と' if(u.likes.count > 1 && l != u.likes.last) %>
-				<% end %>
-				<%='がファイト！と言っています。' if u.likes.count > 0 %>
-
+<!-- 				<span class="badge badge-info" id="<%#'like_area' + u.id.to_s %>"><%# "#{u.likes.count}ファイト！" %></span><br> -->
+				<div class="dropdown">
+  				<%= link_to "#{u.likes.count}人", "#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}%>
+  				<%= 'がファイト！と言っています。' if u.likes.count > 0 %>
+  				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    				<% u.likes.each do |l| %>
+							<% l.user.name = 'あなた' if l.user.id == current_user.id %>
+							<li><%= link_to(l.user.name, "http://twitter.com/#!/#{l.user.screen_name}",target: "_blank") %></li>
+							<%# 'さん' unless l.user.id == current_user.id %>
+							<%# 'と' if(u.likes.count > 1 && l != u.likes.last) %>
+						<% end %>
+  				</ul>
+				</div>
 				<h3><div id="<%= u.id %>" style="display:inline;"></div></h3>
 				<div class="progress progress-striped active">
   				<div class="bar" id="<%= u.id.to_s + 'bar' %>">MAX 8h</div>
@@ -105,6 +110,7 @@ ul li p {
 	}
 	</script>
 <% end %>
+
 
 
 

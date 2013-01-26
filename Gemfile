@@ -48,7 +48,7 @@ gem "rspec-rails", ">= 2.11.4", :group => [:development, :test]
 gem "database_cleaner", ">= 0.9.1", :group => :test
 gem "email_spec", ">= 1.4.0", :group => :test
 gem "less-rails", ">= 2.2.6", :group => :assets
-gem "twitter-bootstrap-rails", ">= 2.1.8", :group => :assets
+gem "twitter-bootstrap-rails", ">= 2.2.0", :group => :assets
 gem 'libv8', '~> 3.11.8.12'
 #gem "therubyracer", :group => :assets, :platform => :ruby, :require => "v8"
 gem "therubyracer", ">= 0.11.2", :group => :assets, :platform => :ruby, :require => "v8"
